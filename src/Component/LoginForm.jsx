@@ -1,6 +1,6 @@
 import React from 'react';
 import {useFormik} from "formik";
-import { signUpSchema } from './schemas';
+import { signUpSchema } from '.';
 
 const initialValues = {
     username: "",
