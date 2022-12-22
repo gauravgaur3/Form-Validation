@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-
+const genderSchema = Yup.string().oneOf(['Male', 'Female'])
 export const signUpSchema = Yup.object({
   username: Yup.string()
     .matches("^[a-zA-Z0-9_-]+$", "No special character are allowed!")
@@ -13,7 +13,7 @@ export const signUpSchema = Yup.object({
     .matches("^[0-9]{10}$", "Phone number must be of 10 digits")
     .required("Mobile field is required"),
   dob: Yup.date().required("Date field is required"),
-  gender: Yup.string().required("Gender field is required"),
+  gender: genderSchema.required('Gender field is required'),
   password: Yup.string().required("Password field is required"),
   confirm_password: Yup.string()
     .required("Confirm Password field is required")

@@ -14,6 +14,7 @@ const initialValues = {
     check_box: ""
 };
 
+const gender = ['Male','Female'];
 
 const LoginForm = () => {
     return (
@@ -32,8 +33,12 @@ const LoginForm = () => {
                 <LoginField label="Email" name="email" type="email" className="form-control"/>
                 <LoginField label="Mobile" name="mobile" type="text" className="form-control"/>
                 <LoginField label="Dob" name="dob" type="date" className="form-control"/>
-                <LoginField label="Male" name="gender" type="radio" value="male" className="form-check-input"/>
-                <LoginField label="Female" name="gender" type="radio" value="female" className="form-check-input"/>
+                <div className='d-flex row'>
+                <label htmlFor="gender" className="form-label">Gender</label>
+                {gender.map((item,i)=>
+                <LoginField label={item} key={i} name="gender" type="radio" value={item} className="form-check-input"/>
+                )}
+                </div>
                 <LoginField label="Password" name="password" type="password" className="form-control"/>
                 <LoginField label="Confirm Password" name="confirm_password" type="password" className="form-control"/>
                 <LoginField label="Accept terms conditions" name="check_box" type="checkbox" className="form-check-input"/>
