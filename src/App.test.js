@@ -1,18 +1,19 @@
-import { render, screen,getByRole,getByText ,fireEvent ,waitFor,getAllByText,findAllByText} from '@testing-library/react';
+import { render, screen,fireEvent ,waitFor,getAllByText,findAllByText} from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
+import LoginField from './Component/LoginField';
 import LoginForm from './Component/LoginForm';
 
 test('renders the Login form', () => {
-  render(<LoginForm />)
-  const usernameInput = screen.getByText('Username')
-  const emailInput = screen.getByText('Email')
-  const mobileInput = screen.getByText('Mobile')
-  const DobInput = screen.getByText('Dob')
-  const maleInput = screen.getByText('Male')
-  const femaleInput = screen.getByText('Female')
-  const passwordInput = screen.getByText('Password')
-  const passwordConfirmationInput = screen.getByText('Confirm Password')
-  const checkboxInput = screen.getByText('Accept terms conditions')
+  const { getByText } = render(<LoginForm />)
+  const usernameInput = getByText('Username')
+  const emailInput = getByText('Email')
+  const mobileInput = getByText('Mobile')
+  const DobInput = getByText('Dob')
+  const maleInput = getByText('Male')
+  const femaleInput = getByText('Female')
+  const passwordInput = getByText('Password')
+  const passwordConfirmationInput = getByText('Confirm Password')
+  const checkboxInput = getByText('Accept terms conditions')
   expect(usernameInput).toBeInTheDocument()
   expect(emailInput).toBeInTheDocument()
   expect(mobileInput).toBeInTheDocument()
@@ -42,20 +43,19 @@ test('validates the form inputs', async () => {
 
   test('submits the form', async () => {
     const mockOnSubmit = jest.fn()
-    const { getByText, getByLabelText } = render(<LoginForm onSubmit={mockOnSubmit} />)
+    const { getByText} = render(<LoginForm onSubmit={mockOnSubmit} />)
     const user = userEvent.setup()
 
     await user.type(getByText(/Username/i), 'John')
     await user.type(getByText(/Email/i), 'Dee@gmail.com')
     await user.type(getByText(/Mobile/i), '7686547654')
     await user.type(getByText(/Dob/i), '2022-12-16')
-    await user.type(getByText(/Gender/i), 'Male')
+    await user.click(getByText(/Gender/i), 'Male')
     await user.type(getByText("Password"), 'qwerty1234')
     await user.type(getByText(/Confirm Password/i), 'qwerty1234')
-    await user.type(getByText(/Accept terms conditions/i), 'true')
+    await user.click(getByText(/Accept terms conditions/i), 'true')
 
-    await user.click(screen.getByRole('button', {name: /Register/i}))
+    await user.click(getByText('Register'))
 
-    // await waitFor(() =>expect(mockOnSubmit).toHaveFormValues())
+    await waitFor(() =>expect(mockOnSubmit))
   })
-
